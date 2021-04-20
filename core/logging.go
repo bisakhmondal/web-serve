@@ -1,3 +1,4 @@
+// Package core
 /*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -11,31 +12,27 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
  */
-package main
+package core
 
 import (
-	"embed"
 	"fmt"
-	"os"
-
-	"github.com/bisakhmondal/web-serve/core"
+	"github.com/gin-gonic/gin"
+	"time"
 )
 
-//go:embed html
-var html embed.FS
-
-//go:embed conf.yml
-var conf string
-
-func main() {
-	c := new(core.Config)
-	err := c.Parse(conf)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	if err := core.CLICommand(html, c).Execute(); err != nil {
-		fmt.Fprintf(os.Stderr,
-			"error occured while spinning up the server: %s\n", err)
-	}
+func logFilter() gin.HandlerFunc {
+	return gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
+		return fmt.Sprintf("IP %s - [%s] \"%s PATH: %s \t\t%s %d LATENCY: %s\" %s\" %s\" BODYSIZE: %d\n",
+			param.ClientIP,
+			param.TimeStamp.Format(time.RFC1123),
+			param.Method,
+			param.Path,
+			param.Request.Proto,
+			param.StatusCode,
+			param.Latency,
+			param.Request.UserAgent(),
+			param.ErrorMessage,
+			param.BodySize,
+		)
+	})
 }

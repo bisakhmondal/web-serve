@@ -1,17 +1,38 @@
+// Package core
+/*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* 	http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+ */
 package core
 
 import (
 	"embed"
 	"fmt"
-	"github.com/spf13/cobra"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
+
+	"github.com/spf13/cobra"
 )
 
-var service *Service
+var (
+	service *Service
+	conf    *Config
+)
 
-func CLICommand(content embed.FS) *cobra.Command {
+func CLICommand(content embed.FS, config *Config) *cobra.Command {
+	conf = config
 	cobra.OnInitialize(func() {
 		var err error
 		service, err = createService(runner, content)
@@ -40,19 +61,37 @@ func CLICommand(content embed.FS) *cobra.Command {
 }
 
 func runner() error {
-	router, err := routeConfig(service.fs)
+	writer, closer := CombinedWriter()
+	defer closer()
+	handler, err := routeConfig(service.fs, writer)
 	if err != nil {
 		return err
 	}
-	go router.Run(":8080")
+	addr := fmt.Sprintf(":%d", conf.Configuration.Server.Port)
 
-	sig := make(chan os.Signal, 1)
+	server := http.Server{
+		Addr:         addr,
+		Handler:      handler,
+		ReadTimeout:  DurationCast(conf.Configuration.Server.Timeout.Read, time.Second),
+		WriteTimeout: DurationCast(conf.Configuration.Server.Timeout.Write, time.Second),
+		IdleTimeout:  DurationCast(conf.Configuration.Server.Timeout.IDLE, time.Second),
+	}
 
-	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM, syscall.SIGKILL)
+	go func() {
+		err := server.ListenAndServe()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "failed to run the server: %s\n", err)
+			os.Exit(1)
+		}
+	}()
 
-	sis := <-sig
+	quit := make(chan os.Signal, 1)
 
-	fmt.Printf("signal received: %s. exiting... ", sis.String())
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM, syscall.SIGKILL)
+	defer signal.Stop(quit)
+	sig := <-quit
+
+	fmt.Printf("signal received: %s. exiting... ", sig.String())
 	return nil
 }
 

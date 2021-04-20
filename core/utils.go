@@ -1,3 +1,4 @@
+// Package core
 /*
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -11,31 +12,33 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
  */
-package main
+package core
 
 import (
-	"embed"
 	"fmt"
+	"io"
 	"os"
-
-	"github.com/bisakhmondal/web-serve/core"
+	"path/filepath"
+	"time"
 )
 
-//go:embed html
-var html embed.FS
+func DurationCast(t int, d time.Duration) time.Duration {
+	return time.Duration(t) * d
+}
 
-//go:embed conf.yml
-var conf string
+func CombinedWriter() (io.Writer, func() error) {
+	f, err := os.OpenFile(filepath.Join(conf.Configuration.Logging.Logdir,
+		conf.Configuration.Logging.Logfile),
+		os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 
-func main() {
-	c := new(core.Config)
-	err := c.Parse(conf)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		fmt.Fprintf(os.Stderr, "error while creating log file: %s\n", err)
 		os.Exit(1)
 	}
-	if err := core.CLICommand(html, c).Execute(); err != nil {
-		fmt.Fprintf(os.Stderr,
-			"error occured while spinning up the server: %s\n", err)
+
+	writer := io.Writer(f)
+	if conf.Configuration.Logging.Stdout {
+		writer = io.MultiWriter(f, os.Stdout)
 	}
+	return writer, f.Close
 }
