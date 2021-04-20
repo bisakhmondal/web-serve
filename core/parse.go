@@ -17,8 +17,9 @@ package core
 import (
 	"bytes"
 	"fmt"
-	"github.com/spf13/viper"
 	"os"
+
+	"github.com/spf13/viper"
 )
 
 type Info struct {

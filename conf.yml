@@ -1,12 +1,11 @@
-
 Configuration:
   info:
-    name: "web-serve" # Name of the server as a service
-    short: "The Production Build Server" # Short info about the server service name
+    name: web-serve # Name of the server as a service
+    short: The Production Build Server # Short info about the server service name
 
   server:
-    port: 8080  # Port on which server is running
-    mode: "RELEASE" # Another option DEBUG
+    port: 8080 # Port on which server is running
+    mode: RELEASE # Another option DEBUG
 
     failsafe: true # If failsafe is set for Single Page Application while hitting virtual routes index.html will be rendered alongside
 
@@ -17,14 +16,14 @@ Configuration:
     blacklist: # list of routes where instead of an 404 HTML an 404 JSON will be returned
       - /custom
 
-    page404: html/404.html  # Path where 404.html can be customised for certain routes if not handled by the SPA
+    page404: html/404.html # Path where 404.html can be customised for certain routes if not handled by the SPA
 
     timeout: # in seconds
       read: 1
       write: 1
-      idle:  120
+      idle: 120
 
-  logging:  # Each request is going to be logged
+  logging: # Each request is going to be logged
     logdir: .
     logfile: traffic.log
     stdout: true # Also log to Stdout true/false

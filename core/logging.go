@@ -16,8 +16,9 @@ package core
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 func logFilter() gin.HandlerFunc {

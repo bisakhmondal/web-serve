@@ -16,8 +16,9 @@ package core
 
 import (
 	"embed"
-	"github.com/takama/daemon"
 	"runtime"
+
+	"github.com/takama/daemon"
 )
 
 type Service struct {

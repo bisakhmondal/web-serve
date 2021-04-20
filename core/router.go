@@ -16,13 +16,12 @@ package core
 
 import (
 	"embed"
-	"github.com/gin-gonic/gin"
 	"io"
 	"io/fs"
 	"net/http"
-	"os"
-	"path/filepath"
 	"strings"
+
+	"github.com/gin-gonic/gin"
 )
 
 func routeConfig(efs embed.FS, w io.Writer) (*gin.Engine, error) {
@@ -31,11 +30,10 @@ func routeConfig(efs embed.FS, w io.Writer) (*gin.Engine, error) {
 	} else {
 		gin.SetMode(gin.ReleaseMode)
 	}
-	f, _ := os.OpenFile(filepath.Join(conf.Configuration.Logging.Logdir,
-		conf.Configuration.Logging.Logfile),
-		os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+
+	gin.DefaultWriter = w
 	router := gin.New()
+
 	//logger
 	router.Use(logFilter())
 	router.Use(gin.Recovery())
