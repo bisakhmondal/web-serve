@@ -15,6 +15,6 @@ set -ex
 
 rm -rf binary
 mkdir binary
-
-env GOOS="${OS}" GOARCH="${ARCH}" go build -o binary/"${BIN_NAME}" main.go
+export GO111MODULE=on
+env GOOS="${OS}" GOARCH="${ARCH}" CGO_ENABLED=0 go build -o binary/"${BIN_NAME}" main.go
 echo "!!Binary Build Successful!!"

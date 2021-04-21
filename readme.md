@@ -26,6 +26,9 @@ docker build -t web-serve .
 
 # Running the build
 docker run -v $(pwd):/web-serve -e OS="linux" -e ARCH="amd64" -e BIN_NAME="your binary name" web-serve
+
+# Change ownership of the binary directory from root to host user
+sudo chown -R $(id -u) binary
 ```
 
 As binaries are platform dependent, you have to mention the Operating system and processor instruction Architecture via environment variables `OS` and `ARCH` respectively. A binary will be created at `binary/` dorectory of current working directory. The environment variable `BIN_NAME` (Optional) is the name of the output binary.
@@ -63,4 +66,3 @@ Use "web-serve [command] --help" for more information about a command.
 If you find a bug in web-serve or have any questions you can ask here. 
 
 New Contributions are always welcome. Please discuss bugfix, performance improvements, new feature request before opening a PR.
-
