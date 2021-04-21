@@ -1,0 +1,178 @@
+[
+	{
+		"OS": "aix",
+		"ARCH": "ppc64"
+	},
+	{
+		"OS": "android",
+		"ARCH": "386"
+	},
+	{
+		"OS": "android",
+		"ARCH": "amd64"
+	},
+	{
+		"OS": "android",
+		"ARCH": "arm"
+	},
+	{
+		"OS": "android",
+		"ARCH": "arm64"
+	},
+	{
+		"OS": "darwin",
+		"ARCH": "386"
+	},
+	{
+		"OS": "darwin",
+		"ARCH": "amd64"
+	},
+	{
+		"OS": "darwin",
+		"ARCH": "arm"
+	},
+	{
+		"OS": "darwin",
+		"ARCH": "arm64"
+	},
+	{
+		"OS": "dragonfly",
+		"ARCH": "amd64"
+	},
+	{
+		"OS": "freebsd",
+		"ARCH": "386"
+	},
+	{
+		"OS": "freebsd",
+		"ARCH": "amd64"
+	},
+	{
+		"OS": "freebsd",
+		"ARCH": "arm"
+	},
+	{
+		"OS": "illumos",
+		"ARCH": "amd64"
+	},
+	{
+		"OS": "js",
+		"ARCH": "wasm"
+	},
+	{
+		"OS": "linux",
+		"ARCH": "386"
+	},
+	{
+		"OS": "linux",
+		"ARCH": "amd64"
+	},
+	{
+		"OS": "linux",
+		"ARCH": "arm"
+	},
+	{
+		"OS": "linux",
+		"ARCH": "arm64"
+	},
+	{
+		"OS": "linux",
+		"ARCH": "mips"
+	},
+	{
+		"OS": "linux",
+		"ARCH": "mips64"
+	},
+	{
+		"OS": "linux",
+		"ARCH": "mips64le"
+	},
+	{
+		"OS": "linux",
+		"ARCH": "mipsle"
+	},
+	{
+		"OS": "linux",
+		"ARCH": "ppc64"
+	},
+	{
+		"OS": "linux",
+		"ARCH": "ppc64le"
+	},
+	{
+		"OS": "linux",
+		"ARCH": "s390x"
+	},
+	{
+		"OS": "nacl",
+		"ARCH": "386"
+	},
+	{
+		"OS": "nacl",
+		"ARCH": "amd64p32"
+	},
+	{
+		"OS": "nacl",
+		"ARCH": "arm"
+	},
+	{
+		"OS": "netbsd",
+		"ARCH": "386"
+	},
+	{
+		"OS": "netbsd",
+		"ARCH": "amd64"
+	},
+	{
+		"OS": "netbsd",
+		"ARCH": "arm"
+	},
+	{
+		"OS": "netbsd",
+		"ARCH": "arm64"
+	},
+	{
+		"OS": "openbsd",
+		"ARCH": "386"
+	},
+	{
+		"OS": "openbsd",
+		"ARCH": "amd64"
+	},
+	{
+		"OS": "openbsd",
+		"ARCH": "arm"
+	},
+	{
+		"OS": "openbsd",
+		"ARCH": "arm64"
+	},
+	{
+		"OS": "plan9",
+		"ARCH": "386"
+	},
+	{
+		"OS": "plan9",
+		"ARCH": "amd64"
+	},
+	{
+		"OS": "plan9",
+		"ARCH": "arm"
+	},
+	{
+		"OS": "solaris",
+		"ARCH": "amd64"
+	},
+	{
+		"OS": "windows",
+		"ARCH": "386"
+	},
+	{
+		"OS": "windows",
+		"ARCH": "amd64"
+	},
+	{
+		"OS": "windows",
+		"ARCH": "arm"
+	}
+]
