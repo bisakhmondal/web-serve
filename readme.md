@@ -15,7 +15,22 @@
   
 - Run the binary by `./<binary_name>`
 
-!!TODO: I will make available a Dockerfile with the steps. 
+### Build the Binary using Docker
+Now no hassle of installing dependencies to build the binary. FYI, I can't provide ready to use built binary for diferrent platforms as the web build assets is going to be embedded into the binary during compile time.
+
+But be assured, i have provided a very easy way to resolve the issue. Just run these commands,
+
+```shell
+# build the docker image
+docker build -t web-serve . 
+
+# Running the build
+docker run -v $(pwd):/web-serve -e OS="linux" -e ARCH="amd64" -e BIN_NAME="your binary name" web-serve
+```
+
+As binaries are platform dependent, you have to mention the Operating system and processor instruction Architecture via environment variables `OS` and `ARCH` respectively. A binary will be created at `binary/` dorectory of current working directory. The environment variable `BIN_NAME` (Optional) is the name of the output binary.
+
+**A list of supported OS and Architecture has been made available [here](./dist.json). Just replace it with the environment variable `OS` and `ARCH` during docker run.**
 
 ## Supported Commands
 `./<binary_name> help`
@@ -40,7 +55,7 @@ Flags:
 Use "web-serve [command] --help" for more information about a command.
 </pre>
 
-### Output
+## Output
 
 ![image](https://user-images.githubusercontent.com/41498427/115451880-59e6cc00-a23b-11eb-97fd-d5aae93c5e55.png)
 
